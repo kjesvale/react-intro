@@ -6,7 +6,26 @@ function Post(props) {
         <div className="post">
             <Author>{props.author}</Author>
             {props.children}
-            <Timestamp timestamp={props.timestamp} />
+            <div className="post-details">
+                <Timestamp timestamp={props.timestamp} />
+                <Likes />
+            </div>
+        </div>
+    );
+}
+
+function Likes(props) {
+    const [likes, setLikes] = React.useState(0);
+    function incrementLikes() {
+        setLikes(likes + 1);
+    }
+
+    return (
+        <div className="likes">
+            Likes: {likes}{' '}
+            <button className="like-button" onClick={incrementLikes}>
+                👍
+            </button>
         </div>
     );
 }

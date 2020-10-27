@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import Image from './Image';
 import Post from './Post';
 import images from './data/images';
+import useTitle from './useTitle';
 
 function FeedPage(props) {
+    useTitle(`Bekkstagram`);
+
     return (
         <div className="posts">
             {images.map((image) => (
