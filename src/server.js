@@ -9,54 +9,63 @@ import username from './sett-brukernavnet-ditt-her';
 const API_BASE_URL = 'https://bekkstagram-api.herokuapp.com/api';
 
 export const getFeed = async () => {
-  const response = await fetch(`${API_BASE_URL}/media`);
-  const { data } = await response.json();
-  return data;
+    const response = await fetch(`${API_BASE_URL}/media`);
+    const { data } = await response.json();
+    return data;
 };
 
-export const getImage = async id => {
-  const response = await fetch(`${API_BASE_URL}/media/${id}`);
-  const { data } = await response.json();
-  return data;
+export const getImage = async (id) => {
+    const response = await fetch(`${API_BASE_URL}/media/${id}`);
+    const { data } = await response.json();
+    return data;
 };
 
-const validateImage = url =>
-  new Promise(resolve => {
-    const image = new Image();
-    image.onload = () => resolve(true);
-    image.onerror = () => resolve(false);
-    image.src = url;
-  });
+const validateImage = (url) =>
+    new Promise((resolve) => {
+        const image = new Image();
+        image.onload = () => resolve(true);
+        image.onerror = () => resolve(false);
+        image.src = url;
+    });
 
 export const uploadImage = async ({ url, description }) => {
-  const isValidUrl = await validateImage(url);
-  if (!isValidUrl) {
-    throw new Error("Image URL wasn't valid");
-  }
+    const isValidUrl = await validateImage(url);
+    if (!isValidUrl) {
+        throw new Error("Image URL wasn't valid");
+    }
 
-  const response = await fetch(`${API_BASE_URL}/media`, {
-    method: 'POST',
-    body: JSON.stringify({ url, description, username }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+    const response = await fetch(`${API_BASE_URL}/media`, {
+        method: 'POST',
+        body: JSON.stringify({ url, description, username }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
 
-  const { data } = await response.json();
-  return data;
+    const { data } = await response.json();
+    return data;
+};
+
+export const mockedPutComment = async (imageId, comment) => {
+    return {
+        id: String(Math.random()).substring(2, 15),
+        createdDate: Date.now(),
+        text: comment,
+        username,
+    };
 };
 
 export const putComment = async (imageId, comment) => {
-  const commentObject = { text: comment, username };
+    const commentObject = { text: comment, username };
 
-  const response = await fetch(`${API_BASE_URL}/media/${imageId}/comments`, {
-    method: 'PUT',
-    body: JSON.stringify(commentObject),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+    const response = await fetch(`${API_BASE_URL}/media/${imageId}/comments`, {
+        method: 'PUT',
+        body: JSON.stringify(commentObject),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
 
-  const { data } = await response.json();
-  return data;
+    const { data } = await response.json();
+    return data;
 };

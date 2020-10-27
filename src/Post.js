@@ -1,5 +1,6 @@
 import React from 'react';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { Comments } from './Comments';
 
 function Post(props) {
     return (
@@ -10,6 +11,7 @@ function Post(props) {
                 <Timestamp timestamp={props.timestamp} />
                 <Likes />
             </div>
+            <Comments imageId={props.imageId} comments={props.comments} />
         </div>
     );
 }
@@ -36,7 +38,7 @@ function Author(props) {
     return <div className="author">{props.children}</div>;
 }
 
-function Timestamp(props) {
+export function Timestamp(props) {
     return <div className="timestamp">{formatDistanceToNow(props.timestamp)} ago</div>;
 }
 
