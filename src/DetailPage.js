@@ -2,15 +2,18 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Image from './Image';
 import Post from './Post';
-import images from './data/images';
-import { useEffect } from 'react';
 import useTitle from './useTitle';
+import useImage from './useImage';
 
 function DetailPage() {
     const { id } = useParams();
-    const image = images.find((image) => image.id === id);
+    const image = useImage(id);
 
-    useTitle(`📷 av ${image.username}`);
+    useTitle(`📷 av ${image ? image.username : ''}`);
+
+    if (!image) {
+        return null;
+    }
 
     return (
         <div className="detail">

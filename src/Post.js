@@ -24,7 +24,9 @@ function Likes(props) {
         <div className="likes">
             Likes: {likes}{' '}
             <button className="like-button" onClick={incrementLikes}>
-                👍
+                <span role="img" aria-label="Lik bildet">
+                    👍
+                </span>
             </button>
         </div>
     );

@@ -2,11 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Image from './Image';
 import Post from './Post';
-import images from './data/images';
 import useTitle from './useTitle';
+import useFeed from './useFeed';
 
 function FeedPage(props) {
     useTitle(`Bekkstagram`);
+    const images = useFeed();
+
+    if (!images) {
+        return null;
+    }
 
     return (
         <div className="posts">
