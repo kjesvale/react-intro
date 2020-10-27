@@ -1,23 +1,33 @@
 import React from 'react';
-import images from './data/images';
+import { Route, BrowserRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import DetailPage from './DetailPage';
+import FeedPage from './FeedPage';
 
 function App() {
     return (
-        <>
-            <Header />
-            {images.map((image) => (
-                <Image key={image.id} src={image.url} alt={image.description} />
-            ))}
-        </>
+        <BrowserRouter>
+            <div className="App">
+                <Header />
+                <Route exact path="/">
+                    <FeedPage />
+                </Route>
+                <Route exact path="/post/:id">
+                    <DetailPage />
+                </Route>
+            </div>
+        </BrowserRouter>
     );
 }
 
-function Header() {
-    return <h1>Bekkstagram</h1>;
-}
-
-function Image({ src, alt }) {
-    return <img className="image" src={src} alt={alt} />;
+function Header(props) {
+    return (
+        <header className="site-header">
+            <h1>
+                <Link to="/">Bekkstagram</Link>
+            </h1>
+        </header>
+    );
 }
 
 export default App;
